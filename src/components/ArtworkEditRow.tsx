@@ -11,28 +11,28 @@ export function ArtworkEditRow({ artwork }: { artwork: Artwork }) {
           defaultValue={artwork.studentFirstName}
           required
           aria-label="Prénom de l'élève"
-          className="rounded-md border border-stone-300 px-2 py-1 text-sm"
+          className="rounded-md border border-line px-2 py-1 text-sm"
         />
         <input
           name="title"
           defaultValue={artwork.title}
           required
           aria-label="Titre"
-          className="rounded-md border border-stone-300 px-2 py-1 text-sm"
+          className="rounded-md border border-line px-2 py-1 text-sm"
         />
         <input
           name="medium"
           defaultValue={artwork.medium ?? ""}
           placeholder="Médium"
           aria-label="Médium"
-          className="rounded-md border border-stone-300 px-2 py-1 text-sm"
+          className="rounded-md border border-line px-2 py-1 text-sm"
         />
         <input
           name="createdDate"
           type="date"
           defaultValue={artwork.createdDate ?? ""}
           aria-label="Date de création"
-          className="rounded-md border border-stone-300 px-2 py-1 text-sm"
+          className="rounded-md border border-line px-2 py-1 text-sm"
         />
       </div>
       <textarea
@@ -41,9 +41,9 @@ export function ArtworkEditRow({ artwork }: { artwork: Artwork }) {
         placeholder="Description"
         rows={2}
         aria-label="Description"
-        className="w-full rounded-md border border-stone-300 px-2 py-1 text-sm"
+        className="w-full rounded-md border border-line px-2 py-1 text-sm"
       />
-      <button className="rounded-md border border-stone-300 px-3 py-1 text-sm hover:bg-stone-100">
+      <button className="rounded-md border border-line px-3 py-1 text-sm hover:bg-cream">
         Enregistrer
       </button>
     </form>

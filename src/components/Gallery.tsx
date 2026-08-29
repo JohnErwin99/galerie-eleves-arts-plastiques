@@ -42,25 +42,28 @@ export function Gallery({ artworks }: { artworks: Artwork[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      {/* Mur de galerie : chaque œuvre sur son passe-partout blanc */}
+      <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
         {artworks.map((w, i) => (
           <button
             key={w.id}
             onClick={() => setIndex(i)}
-            className="group overflow-hidden rounded-lg border border-stone-200 bg-white text-left transition-shadow hover:shadow-md"
+            className="group rounded-lg border border-line bg-paper p-3 text-left shadow-frame transition-all duration-300 hover:-translate-y-1 hover:shadow-frame-lift sm:p-4"
           >
-            <div className="aspect-square bg-stone-100">
+            <div className="aspect-square overflow-hidden bg-line-soft">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`/uploads/${w.thumbPath}`}
                 alt={`${w.title}, par ${w.studentFirstName}`}
                 loading="lazy"
-                className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
-            <div className="p-3">
-              <p className="truncate text-sm font-medium">{w.title}</p>
-              <p className="truncate text-xs text-stone-500">par {w.studentFirstName}</p>
+            <div className="pt-3">
+              <p className="truncate font-display font-semibold group-hover:text-accent">
+                {w.title}
+              </p>
+              <p className="truncate text-xs text-ink-soft">par {w.studentFirstName}</p>
             </div>
           </button>
         ))}
@@ -71,23 +74,23 @@ export function Gallery({ artworks }: { artworks: Artwork[] }) {
           role="dialog"
           aria-modal="true"
           aria-label={`${current.title}, par ${current.studentFirstName}`}
-          className="fixed inset-0 z-50 flex flex-col bg-black/90 p-4"
+          className="fixed inset-0 z-50 flex flex-col bg-[#161215]/95 p-4 backdrop-blur-sm"
           onClick={close}
         >
           <div className="flex justify-end gap-2 pb-2">
             <button
               onClick={(e) => { e.stopPropagation(); close(); }}
               aria-label="Fermer"
-              className="rounded-full bg-white/10 px-4 py-2 text-white hover:bg-white/20"
+              className="rounded-full bg-white/10 px-4 py-2 text-sm text-white transition-colors hover:bg-accent"
             >
               ✕ Fermer
             </button>
           </div>
-          <div className="flex min-h-0 grow items-center justify-center gap-2">
+          <div className="flex min-h-0 grow items-center justify-center gap-3">
             <button
               onClick={(e) => { e.stopPropagation(); prev(); }}
               aria-label="Œuvre précédente"
-              className="shrink-0 rounded-full bg-white/10 px-3 py-2 text-white hover:bg-white/20"
+              className="shrink-0 rounded-full bg-white/10 px-4 py-3 text-white transition-colors hover:bg-accent"
             >
               ←
             </button>
@@ -96,29 +99,32 @@ export function Gallery({ artworks }: { artworks: Artwork[] }) {
               src={`/uploads/${current.imagePath}`}
               alt={`${current.title}, par ${current.studentFirstName}`}
               onClick={(e) => e.stopPropagation()}
-              className="max-h-full min-h-0 max-w-full rounded-md object-contain"
+              className="max-h-full min-h-0 max-w-full rounded-sm bg-paper object-contain p-1 shadow-2xl sm:p-2"
             />
             <button
               onClick={(e) => { e.stopPropagation(); next(); }}
               aria-label="Œuvre suivante"
-              className="shrink-0 rounded-full bg-white/10 px-3 py-2 text-white hover:bg-white/20"
+              className="shrink-0 rounded-full bg-white/10 px-4 py-3 text-white transition-colors hover:bg-accent"
             >
               →
             </button>
           </div>
           <div
-            className="mx-auto max-w-2xl pt-4 text-center text-white"
+            className="mx-auto max-w-2xl pt-5 text-center text-white"
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="text-lg font-semibold">{current.title}</p>
-            <p className="text-sm text-stone-300">
+            <p className="font-display text-xl font-semibold">{current.title}</p>
+            <p className="mt-1 text-sm text-white/70">
               par {current.studentFirstName}
               {current.medium && ` · ${current.medium}`}
               {formatDate(current.createdDate) && ` · ${formatDate(current.createdDate)}`}
             </p>
             {current.description && (
-              <p className="mt-2 text-sm text-stone-400">{current.description}</p>
+              <p className="mt-2 text-sm text-white/50">{current.description}</p>
             )}
+            <p className="mt-2 text-xs text-white/30">
+              {index! + 1} / {artworks.length}
+            </p>
           </div>
         </div>
       )}

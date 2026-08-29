@@ -17,11 +17,11 @@ export function ArtworkUploadForm({ projectId }: { projectId: number }) {
     <form
       ref={formRef}
       action={formAction}
-      className="max-w-lg space-y-4 rounded-lg border border-stone-200 bg-white p-4"
+      className="max-w-lg space-y-4 rounded-lg border border-line bg-paper p-4"
     >
       <div>
         <label htmlFor="image" className="mb-1 block text-sm font-medium">
-          Photo de l&apos;œuvre * <span className="font-normal text-stone-500">(max 15 Mo)</span>
+          Photo de l&apos;œuvre * <span className="font-normal text-ink-soft">(max 15 Mo)</span>
         </label>
         <input id="image" name="image" type="file" accept="image/*" required className="w-full text-sm" />
       </div>
@@ -34,7 +34,7 @@ export function ArtworkUploadForm({ projectId }: { projectId: number }) {
             id="studentFirstName"
             name="studentFirstName"
             required
-            className="w-full rounded-md border border-stone-300 px-3 py-2"
+            className="w-full rounded-md border border-line px-3 py-2"
           />
         </div>
         <div>
@@ -45,7 +45,7 @@ export function ArtworkUploadForm({ projectId }: { projectId: number }) {
             id="title"
             name="title"
             required
-            className="w-full rounded-md border border-stone-300 px-3 py-2"
+            className="w-full rounded-md border border-line px-3 py-2"
           />
         </div>
         <div>
@@ -56,7 +56,7 @@ export function ArtworkUploadForm({ projectId }: { projectId: number }) {
             id="medium"
             name="medium"
             placeholder="Ex. : Acrylique sur toile"
-            className="w-full rounded-md border border-stone-300 px-3 py-2"
+            className="w-full rounded-md border border-line px-3 py-2"
           />
         </div>
         <div>
@@ -67,7 +67,7 @@ export function ArtworkUploadForm({ projectId }: { projectId: number }) {
             id="createdDate"
             name="createdDate"
             type="date"
-            className="w-full rounded-md border border-stone-300 px-3 py-2"
+            className="w-full rounded-md border border-line px-3 py-2"
           />
         </div>
       </div>
@@ -79,13 +79,13 @@ export function ArtworkUploadForm({ projectId }: { projectId: number }) {
           id="description"
           name="description"
           rows={2}
-          className="w-full rounded-md border border-stone-300 px-3 py-2"
+          className="w-full rounded-md border border-line px-3 py-2"
         />
       </div>
       {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
       <button
         disabled={pending}
-        className="rounded-md bg-stone-900 px-4 py-2 font-medium text-white hover:bg-stone-700 disabled:opacity-50"
+        className="rounded-full bg-accent px-4 py-2 font-medium text-white hover:bg-accent-deep disabled:opacity-50"
       >
         {pending ? "Téléversement…" : "Ajouter l'œuvre"}
       </button>

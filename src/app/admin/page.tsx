@@ -24,16 +24,16 @@ export default async function AdminPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Tableau de bord</h1>
+        <h1 className="font-display text-3xl font-semibold">Tableau de bord</h1>
         <div className="flex gap-3">
           <Link
             href="/admin/projets/nouveau"
-            className="rounded-md bg-stone-900 px-4 py-2 text-sm font-medium text-white hover:bg-stone-700"
+            className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-accent-deep"
           >
             + Nouveau projet
           </Link>
           <form action={logout}>
-            <button className="rounded-md border border-stone-300 px-4 py-2 text-sm hover:bg-stone-100">
+            <button className="rounded-md border border-line px-4 py-2 text-sm hover:bg-cream">
               Se déconnecter
             </button>
           </form>
@@ -41,11 +41,11 @@ export default async function AdminPage() {
       </div>
 
       {rows.length === 0 ? (
-        <p className="text-stone-500">Aucun projet pour l&apos;instant. Créez votre premier projet!</p>
+        <p className="text-ink-soft">Aucun projet pour l&apos;instant. Créez votre premier projet!</p>
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-stone-200 bg-white">
+        <div className="overflow-x-auto rounded-lg border border-line bg-paper">
           <table className="w-full text-sm">
-            <thead className="border-b border-stone-200 text-left text-stone-500">
+            <thead className="border-b border-line text-left text-ink-soft">
               <tr>
                 <th className="px-4 py-3">Projet</th>
                 <th className="px-4 py-3">Année</th>
@@ -56,7 +56,7 @@ export default async function AdminPage() {
             </thead>
             <tbody>
               {rows.map(({ project, artworkCount }) => (
-                <tr key={project.id} className="border-b border-stone-100 last:border-0">
+                <tr key={project.id} className="border-b border-line-soft last:border-0">
                   <td className="px-4 py-3 font-medium">{project.title}</td>
                   <td className="px-4 py-3">{project.schoolYear ?? "—"}</td>
                   <td className="px-4 py-3">{artworkCount}</td>
@@ -66,7 +66,7 @@ export default async function AdminPage() {
                         Publié
                       </span>
                     ) : (
-                      <span className="rounded-full bg-stone-100 px-2 py-0.5 text-xs text-stone-600">
+                      <span className="rounded-full bg-line-soft px-2 py-0.5 text-xs text-ink-soft">
                         Brouillon
                       </span>
                     )}
@@ -75,7 +75,7 @@ export default async function AdminPage() {
                     <div className="flex justify-end gap-2">
                       <Link
                         href={`/admin/projets/${project.id}`}
-                        className="rounded-md border border-stone-300 px-3 py-1 hover:bg-stone-100"
+                        className="rounded-md border border-line px-3 py-1 hover:bg-cream"
                       >
                         Modifier
                       </Link>

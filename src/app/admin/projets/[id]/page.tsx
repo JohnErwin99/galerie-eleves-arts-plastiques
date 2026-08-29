@@ -33,12 +33,12 @@ export default async function EditProjetPage({
   return (
     <div className="space-y-10">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Modifier le projet</h1>
+        <h1 className="font-display text-3xl font-semibold">Modifier le projet</h1>
         <div className="flex gap-3 text-sm">
-          <Link href={`/projets/${id}`} className="text-stone-500 hover:text-stone-900">
+          <Link href={`/projets/${id}`} className="text-ink-soft hover:text-ink">
             Voir la page publique →
           </Link>
-          <Link href="/admin" className="text-stone-500 hover:text-stone-900">
+          <Link href="/admin" className="text-ink-soft hover:text-ink">
             ← Tableau de bord
           </Link>
         </div>
@@ -46,28 +46,28 @@ export default async function EditProjetPage({
 
       <form action={updateProject.bind(null, id)} className="max-w-lg space-y-6">
         <ProjectFields project={project} />
-        <button className="rounded-md bg-stone-900 px-4 py-2 font-medium text-white hover:bg-stone-700">
+        <button className="rounded-full bg-accent px-4 py-2 font-medium text-white hover:bg-accent-deep">
           Enregistrer
         </button>
       </form>
 
       <section>
-        <h2 className="mb-4 text-xl font-semibold">Ajouter une œuvre</h2>
+        <h2 className="mb-4 font-display text-xl font-semibold">Ajouter une œuvre</h2>
         <ArtworkUploadForm projectId={id} />
       </section>
 
       <section>
-        <h2 className="mb-4 text-xl font-semibold">
+        <h2 className="mb-4 font-display text-xl font-semibold">
           Œuvres ({works.length})
         </h2>
         {works.length === 0 ? (
-          <p className="text-stone-500">Aucune œuvre pour l&apos;instant.</p>
+          <p className="text-ink-soft">Aucune œuvre pour l&apos;instant.</p>
         ) : (
           <ul className="space-y-4">
             {works.map((w) => (
               <li
                 key={w.id}
-                className="flex flex-col gap-4 rounded-lg border border-stone-200 bg-white p-4 sm:flex-row"
+                className="flex flex-col gap-4 rounded-lg border border-line bg-paper p-4 sm:flex-row"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -84,7 +84,7 @@ export default async function EditProjetPage({
                       </span>
                     ) : (
                       <form action={setCoverArtwork.bind(null, id, w.id)}>
-                        <button className="rounded-md border border-stone-300 px-3 py-1 hover:bg-stone-100">
+                        <button className="rounded-md border border-line px-3 py-1 hover:bg-cream">
                           Choisir comme couverture
                         </button>
                       </form>

@@ -27,19 +27,29 @@ export default async function ProjetPage({
 
   return (
     <div>
-      <Link href="/" className="text-sm text-stone-500 hover:text-stone-900">
+      <Link
+        href="/"
+        className="text-sm text-ink-soft transition-colors hover:text-accent"
+      >
         ← Tous les projets
       </Link>
-      <div className="mb-8 mt-3 max-w-2xl">
-        <h1 className="mb-2 text-3xl font-bold tracking-tight">{project.title}</h1>
+      <header className="mb-12 mt-6 max-w-3xl">
+        <h1 className="font-display text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
+          {project.title}
+        </h1>
+        <div className="mt-4 h-1 w-14 bg-accent" aria-hidden />
         {project.schoolYear && (
-          <p className="mb-2 text-sm text-stone-500">{project.schoolYear}</p>
+          <span className="mt-4 inline-block rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+            {project.schoolYear}
+          </span>
         )}
-        {project.description && <p className="text-stone-600">{project.description}</p>}
-      </div>
+        {project.description && (
+          <p className="mt-4 text-lg leading-relaxed text-ink-soft">{project.description}</p>
+        )}
+      </header>
 
       {works.length === 0 ? (
-        <p className="text-stone-500">Aucune œuvre pour l&apos;instant.</p>
+        <p className="text-ink-soft">Aucune œuvre pour l&apos;instant.</p>
       ) : (
         <Gallery artworks={works} />
       )}

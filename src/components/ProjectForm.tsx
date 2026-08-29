@@ -14,7 +14,7 @@ export function ProjectFields({ project }: { project?: Project }) {
           required
           defaultValue={project?.title}
           placeholder="Ex. : Autoportraits — 10e année"
-          className="w-full rounded-md border border-stone-300 px-3 py-2"
+          className="w-full rounded-md border border-line px-3 py-2"
         />
       </div>
       <div>
@@ -26,7 +26,7 @@ export function ProjectFields({ project }: { project?: Project }) {
           name="description"
           rows={3}
           defaultValue={project?.description ?? ""}
-          className="w-full rounded-md border border-stone-300 px-3 py-2"
+          className="w-full rounded-md border border-line px-3 py-2"
         />
       </div>
       <div>
@@ -38,7 +38,7 @@ export function ProjectFields({ project }: { project?: Project }) {
           name="schoolYear"
           defaultValue={project?.schoolYear ?? ""}
           placeholder="2025-2026"
-          className="w-full rounded-md border border-stone-300 px-3 py-2"
+          className="w-full rounded-md border border-line px-3 py-2"
         />
       </div>
       <label className="flex items-center gap-2 text-sm">
