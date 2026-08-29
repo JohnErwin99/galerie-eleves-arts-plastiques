@@ -1,43 +1,68 @@
 # Galerie d'art des élèves
 
-Galerie d'art numérique pour présenter les projets des élèves du cours d'arts visuels.
-L'enseignante (administratrice) ajoute des projets et téléverse les photos des œuvres;
-les parents et le public consultent la galerie librement.
+Galerie d'art numérique pour le cours d'arts visuels : l'enseignante ajoute les
+projets et les œuvres des élèves; les parents et le public consultent librement.
 
-## Fonctionnement
-
-- **Public** : page d'accueil avec les projets publiés → page d'un projet → visionneuse plein écran (flèches ←/→, Échap pour fermer).
-- **Espace enseignante** (`/admin`) : connexion par courriel/mot de passe, création et modification de projets, téléversement des photos d'œuvres (prénom de l'élève seulement, titre, médium, date, description), choix de l'image de couverture, statut publié/brouillon.
-- Les images sont automatiquement optimisées (WebP, grande taille + vignette) et stockées avec la base de données SQLite dans le dossier `data/` — une seule chose à sauvegarder.
-
-## Développement local
+## Démarrage local
 
 ```bash
 npm install
-cp .env.example .env
-# Générer le hash du mot de passe et le secret de session :
-npm run hash-password -- "votreMotDePasse"   # → coller dans ADMIN_PASSWORD_HASH
-openssl rand -hex 32                          # → coller dans SESSION_SECRET
-npm run seed        # (optionnel) crée 2 projets d'exemple
-npm run dev         # http://localhost:3000
+cp .env.example .env        # puis remplir les valeurs (voir ci-dessous)
+npm run seed                # crée la base + 2 projets d'exemple
+npm run dev                 # http://localhost:3000
 ```
 
-La base de données et ses tables sont créées automatiquement au premier démarrage.
+### Configuration (.env)
+
+| Variable | Description |
+|---|---|
+| `DATABASE_PATH` | Chemin du fichier SQLite (`data/app.db` en local) |
+| `UPLOADS_DIR` | Dossier des images (`data/uploads` en local) |
+| `ADMIN_EMAIL` | Courriel de connexion de l'enseignante |
+| `ADMIN_PASSWORD_HASH` | Hash bcrypt du mot de passe |
+| `SESSION_SECRET` | Secret de session (32+ caractères) : `openssl rand -hex 32` |
+
+Générer le hash du mot de passe :
+
+```bash
+npm run hash-password -- "votre mot de passe"
+```
+
+⚠️ Dans le fichier `.env`, les `$` du hash doivent être échappés en `\$`
+(le script affiche la valeur déjà échappée). Sur Railway/Render, utiliser la
+valeur brute sans les `\`.
+
+## Guide de l'enseignante
+
+1. Aller sur `/admin` et se connecter.
+2. **Nouveau projet** : titre (ex. « Autoportraits — 10e année »), description,
+   année scolaire. Décocher « Visible au public » pour travailler en brouillon.
+3. Dans la page du projet : **Ajouter une œuvre** — photo (max 15 Mo), prénom de
+   l'élève (prénom seulement, par souci de confidentialité), titre, médium, date.
+4. La première œuvre devient automatiquement l'image de couverture; on peut en
+   choisir une autre avec « Choisir comme couverture ».
+5. Cocher « Visible au public » puis Enregistrer pour publier.
+
+Les photos sont automatiquement recadrées, converties en WebP et accompagnées
+d'une miniature — on peut téléverser directement les photos du téléphone.
 
 ## Déploiement sur Railway
 
-1. Pousser ce dépôt sur GitHub et créer un projet Railway à partir du dépôt (le `Dockerfile` est détecté automatiquement).
-2. Ajouter un **Volume** au service, monté sur `/data` (le Dockerfile pointe déjà `DATABASE_PATH=/data/app.db` et `UPLOADS_DIR=/data/uploads`).
-3. Définir les variables d'environnement : `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`, `SESSION_SECRET` (voir `.env.example`).
-4. Générer un domaine public dans les réglages du service.
+1. Pousser ce dépôt sur GitHub et créer un projet Railway à partir du dépôt
+   (le `Dockerfile` est détecté automatiquement).
+2. Ajouter un **Volume** monté sur `/data`.
+3. Définir les variables d'environnement :
+   - `DATABASE_PATH=/data/app.db`
+   - `UPLOADS_DIR=/data/uploads`
+   - `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH` (valeur brute du hash), `SESSION_SECRET`
+4. Générer un domaine public dans les réglages du service (port 3000).
 
-**Sauvegarde** : copier le contenu du volume `/data` (base + images) régulièrement.
+La base et toutes les images vivent dans le volume `/data` : une seule chose à
+sauvegarder. (Render fonctionne aussi, mais le disque persistant exige un plan
+payant.)
 
-## Guide rapide pour l'enseignante
+## Pile technique
 
-1. Aller sur `/admin` et se connecter.
-2. « Nouveau projet » : donner un titre (ex. « Autoportraits — 10e année »), une description, l'année scolaire.
-3. Dans la page du projet, téléverser les photos des œuvres une à une (une photo de téléphone convient très bien).
-4. La première œuvre devient la couverture du projet; on peut en choisir une autre avec « Choisir comme couverture ».
-5. Décocher « Visible au public » pour garder un projet en brouillon.
-6. Par souci de confidentialité, n'inscrire que le **prénom** des élèves.
+Next.js (App Router) · SQLite + Drizzle ORM · sharp (images) ·
+iron-session + bcrypt (session admin unique) · Tailwind CSS.
+Les migrations s'exécutent automatiquement au démarrage.

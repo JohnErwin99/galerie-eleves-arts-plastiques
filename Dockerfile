@@ -1,23 +1,23 @@
-FROM node:22-slim AS deps
+FROM node:22-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
-FROM node:22-slim AS build
+FROM node:22-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ENV NEXT_TELEMETRY_DISABLED=1
+# Valeurs factices pour le build seulement (les vraies viennent de l'environnement Railway)
+ENV SESSION_SECRET=build-placeholder-secret-32-characters!!
 RUN npm run build
 
-FROM node:22-slim
+FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV DATABASE_PATH=/data/app.db
-ENV UPLOADS_DIR=/data/uploads
-COPY --from=build /app/.next/standalone ./
-COPY --from=build /app/.next/static ./.next/static
-COPY --from=build /app/drizzle ./drizzle
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/drizzle ./drizzle
 EXPOSE 3000
+ENV PORT=3000 HOSTNAME=0.0.0.0
 CMD ["node", "server.js"]
