@@ -1,7 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { Artwork } from "@/db";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 function formatDate(iso: string | null) {
   if (!iso) return null;
@@ -12,6 +15,7 @@ function formatDate(iso: string | null) {
 
 export function Gallery({ artworks }: { artworks: Artwork[] }) {
   const [index, setIndex] = useState<number | null>(null);
+  const reduced = useReducedMotion();
 
   const close = useCallback(() => setIndex(null), []);
   const prev = useCallback(
@@ -42,13 +46,23 @@ export function Gallery({ artworks }: { artworks: Artwork[] }) {
 
   return (
     <>
-      {/* Mur de galerie : chaque œuvre sur son passe-partout blanc */}
-      <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+      {/* Cartes façon L'Original : bord fin, coins nets, légende compacte */}
+      <motion.div
+        className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4"
+        initial={reduced ? false : "hidden"}
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={{ visible: { transition: { staggerChildren: 0.07 } } }}
+      >
         {artworks.map((w, i) => (
-          <button
+          <motion.button
             key={w.id}
             onClick={() => setIndex(i)}
-            className="group rounded-lg border border-line bg-paper p-3 text-left shadow-frame transition-all duration-300 hover:-translate-y-1 hover:shadow-frame-lift sm:p-4"
+            variants={{
+              hidden: { opacity: 0, y: 56 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
+            }}
+            className="group border border-line bg-paper text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-frame-lift"
           >
             <div className="aspect-square overflow-hidden bg-line-soft">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -59,23 +73,29 @@ export function Gallery({ artworks }: { artworks: Artwork[] }) {
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
-            <div className="pt-3">
-              <p className="truncate font-display font-semibold group-hover:text-accent">
-                {w.title}
-              </p>
+            <div className="space-y-0.5 p-3">
+              <p className="truncate text-sm font-bold group-hover:text-accent">{w.title}</p>
               <p className="truncate text-xs text-ink-soft">par {w.studentFirstName}</p>
+              {w.medium && (
+                <p className="truncate text-[11px] text-ink-faint">{w.medium}</p>
+              )}
             </div>
-          </button>
+          </motion.button>
         ))}
-      </div>
+      </motion.div>
 
+      <AnimatePresence>
       {current && (
-        <div
+        <motion.div
           role="dialog"
           aria-modal="true"
           aria-label={`${current.title}, par ${current.studentFirstName}`}
           className="fixed inset-0 z-50 flex flex-col bg-[#161215]/95 p-4 backdrop-blur-sm"
           onClick={close}
+          initial={reduced ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.25 } }}
+          transition={{ duration: 0.35 }}
         >
           <div className="flex justify-end gap-2 pb-2">
             <button
@@ -94,11 +114,14 @@ export function Gallery({ artworks }: { artworks: Artwork[] }) {
             >
               ←
             </button>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <motion.img
+              key={current.id}
               src={`/uploads/${current.imagePath}`}
               alt={`${current.title}, par ${current.studentFirstName}`}
               onClick={(e) => e.stopPropagation()}
+              initial={reduced ? false : { opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.45, ease: EASE }}
               className="max-h-full min-h-0 max-w-full rounded-sm bg-paper object-contain p-1 shadow-2xl sm:p-2"
             />
             <button
@@ -126,8 +149,9 @@ export function Gallery({ artworks }: { artworks: Artwork[] }) {
               {index! + 1} / {artworks.length}
             </p>
           </div>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </>
   );
 }

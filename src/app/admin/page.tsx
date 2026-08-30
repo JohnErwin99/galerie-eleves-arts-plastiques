@@ -22,7 +22,7 @@ export default async function AdminPage() {
     .orderBy(desc(projects.createdAt));
 
   return (
-    <div>
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="font-display text-3xl font-semibold">Tableau de bord</h1>
         <div className="flex gap-3">

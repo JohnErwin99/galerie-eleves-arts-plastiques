@@ -31,7 +31,7 @@ export default async function EditProjetPage({
     .orderBy(asc(artworks.sortOrder), asc(artworks.id));
 
   return (
-    <div className="space-y-10">
+    <div className="mx-auto max-w-6xl space-y-10 px-4 py-10 sm:px-6">
       <div className="flex items-center justify-between">
         <h1 className="font-display text-3xl font-semibold">Modifier le projet</h1>
         <div className="flex gap-3 text-sm">

@@ -7,7 +7,7 @@ export const metadata = { title: "Connexion" };
 export default async function ConnexionPage() {
   if (await isLoggedIn()) redirect("/admin");
   return (
-    <div className="mx-auto max-w-sm py-12">
+    <div className="mx-auto max-w-sm px-4 py-16">
       <h1 className="mb-6 font-display text-3xl font-semibold">Connexion</h1>
       <LoginForm />
     </div>

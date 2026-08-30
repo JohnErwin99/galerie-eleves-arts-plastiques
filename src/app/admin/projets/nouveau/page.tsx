@@ -8,7 +8,7 @@ export const metadata = { title: "Nouveau projet" };
 export default async function NouveauProjetPage() {
   await requireAdmin();
   return (
-    <div className="mx-auto max-w-lg">
+    <div className="mx-auto max-w-lg px-4 py-10">
       <h1 className="mb-6 font-display text-3xl font-semibold">Nouveau projet</h1>
       <form action={createProject} className="space-y-6">
         <ProjectFields />

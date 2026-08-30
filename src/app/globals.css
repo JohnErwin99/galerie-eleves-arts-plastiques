@@ -1,23 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette « Musée chaleureux » */
-  --color-cream: #faf7f2;
+  /* Palette pastel de l'enseignante : menthe → ciel → pervenche → lilas,
+     ancrée par un vert profond et un violet lisibles (texte/boutons). */
+  --color-mint: #9be5dc;
+  --color-sky: #b9def2;
+  --color-peri: #c9def2;
+  --color-pale: #d9def2;
+  --color-lilac: #e9def2;
+
+  --color-cream: #fbfdfd;
   --color-paper: #ffffff;
-  --color-ink: #1c1917;
-  --color-ink-soft: #57534e;
-  --color-ink-faint: #a8a29e;
-  --color-accent: #71357c;
-  --color-accent-deep: #5a2a63;
-  --color-accent-warm: #e22658;
-  --color-line: #e7e0d8;
-  --color-line-soft: #f0ebe3;
+  --color-ink: #1a2422;
+  --color-ink-soft: #566662;
+  --color-ink-faint: #93a3a0;
+  --color-accent: #116657;
+  --color-accent-deep: #0b463c;
+  --color-accent-warm: #6f4f96;
+  --color-tint: #e9def2;
+  --color-line: #dde8e6;
+  --color-line-soft: #eef4f3;
 
   --font-display: var(--font-fraunces);
   --font-body: var(--font-work-sans);
 
-  --shadow-frame: 0 1px 2px rgb(28 25 23 / 0.06), 0 8px 24px rgb(28 25 23 / 0.08);
-  --shadow-frame-lift: 0 2px 4px rgb(28 25 23 / 0.08), 0 16px 40px rgb(28 25 23 / 0.14);
+  --shadow-frame: 0 1px 2px rgb(23 33 31 / 0.05), 0 6px 20px rgb(23 33 31 / 0.07);
+  --shadow-frame-lift: 0 2px 4px rgb(23 33 31 / 0.08), 0 14px 36px rgb(23 33 31 / 0.13);
+}
+
+html,
+body {
+  overflow-x: clip;
 }
 
 body {
@@ -26,15 +39,38 @@ body {
   font-family: var(--font-body), sans-serif;
 }
 
-/* Titre de section avec trait violet (motif « line-after ») */
-.line-after {
+/* Mot accentué dans un titre : serif italique violet (motif L'Original) */
+.accent-word {
   font-family: var(--font-display), serif;
+  font-style: italic;
+  color: var(--color-accent-warm);
 }
+
+/* Titre de section avec trait dégradé menthe → lilas (motif « line-after ») */
 .line-after::after {
   content: "";
   display: block;
   width: 3.5rem;
-  height: 4px;
+  height: 3px;
   margin-top: 0.6rem;
-  background: var(--color-accent);
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-warm));
+}
+
+/* Dégradé pastel signature (bannières, fonds doux) */
+.pastel-gradient {
+  background: linear-gradient(
+    110deg,
+    var(--color-mint),
+    var(--color-sky) 35%,
+    var(--color-pale) 65%,
+    var(--color-lilac)
+  );
+}
+
+/* Section pleine largeur qui s'échappe du conteneur central */
+.full-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
 }
