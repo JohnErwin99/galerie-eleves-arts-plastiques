@@ -8,12 +8,12 @@ async function main() {
   }
   await db.insert(projects).values([
     {
-      title: "Autoportraits — 10e année",
+      title: "Autoportraits (10e année)",
       description: "Exploration de l'identité à travers l'autoportrait, techniques mixtes.",
       schoolYear: "2025-2026",
     },
     {
-      title: "Natures mortes — 11e année",
+      title: "Natures mortes (11e année)",
       description: "Étude de la lumière et de la composition en peinture acrylique.",
       schoolYear: "2025-2026",
     },

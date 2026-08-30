@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
-const EASE = [0.22, 1, 0.36, 1] as const; // easeOutQuint — glissement doux
+const EASE = [0.22, 1, 0.36, 1] as const; // easeOutQuint, glissement doux
 
 /** Fait glisser le contenu vers le haut quand il entre dans l'écran. */
 export function Reveal({

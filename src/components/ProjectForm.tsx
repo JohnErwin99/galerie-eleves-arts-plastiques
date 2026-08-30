@@ -13,7 +13,7 @@ export function ProjectFields({ project }: { project?: Project }) {
           name="title"
           required
           defaultValue={project?.title}
-          placeholder="Ex. : Autoportraits — 10e année"
+          placeholder="Ex. : Autoportraits (10e année)"
           className="w-full rounded-md border border-line px-3 py-2"
         />
       </div>

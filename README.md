@@ -21,7 +21,7 @@ npm run dev                 # http://localhost:3000
 | `ADMIN_EMAIL` | Courriel de connexion de l'enseignante |
 | `ADMIN_PASSWORD_HASH` | Hash bcrypt du mot de passe |
 | `SESSION_SECRET` | Secret de session (32+ caractères) : `openssl rand -hex 32` |
-| `RECOVERY_CODE` | Code pour « Mot de passe oublié » : `openssl rand -hex 8` — à conserver par la personne qui gère le site |
+| `RECOVERY_CODE` | Code pour « Mot de passe oublié » : `openssl rand -hex 8`, à conserver par la personne qui gère le site |
 
 Générer le hash du mot de passe :
 
@@ -45,16 +45,16 @@ défini ainsi est stocké dans la base et remplace celui des variables
 d'environnement.
 
 1. Aller sur `/admin` et se connecter.
-2. **Nouveau projet** : titre (ex. « Autoportraits — 10e année »), description,
+2. **Nouveau projet** : titre (ex. « Autoportraits (10e année) »), description,
    année scolaire. Décocher « Visible au public » pour travailler en brouillon.
-3. Dans la page du projet : **Ajouter une œuvre** — photo (max 15 Mo), prénom de
+3. Dans la page du projet : **Ajouter une œuvre** : photo (max 15 Mo), prénom de
    l'élève (prénom seulement, par souci de confidentialité), titre, médium, date.
 4. La première œuvre devient automatiquement l'image de couverture; on peut en
    choisir une autre avec « Choisir comme couverture ».
 5. Cocher « Visible au public » puis Enregistrer pour publier.
 
 Les photos sont automatiquement recadrées, converties en WebP et accompagnées
-d'une miniature — on peut téléverser directement les photos du téléphone.
+d'une miniature; on peut téléverser directement les photos du téléphone.
 
 ## Déploiement sur Railway
 

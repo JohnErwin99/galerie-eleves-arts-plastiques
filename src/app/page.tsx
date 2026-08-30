@@ -30,20 +30,19 @@ export default async function AccueilPage() {
     }
   }
 
-  const panelImage = (i: number) =>
-    recent[i] ? `/uploads/${recent[i].artwork.imagePath}` : "/banniere.webp";
-
   return (
     <div>
       {/* Héros écran scindé façon art.gal : éditorial + menu en colonnes */}
       <HeroSplit
         panels={[
-          { label: "Projets", href: "#projets", image: panelImage(0) },
-          { label: "Œuvres", href: "#oeuvres", image: panelImage(1) },
-          { label: "Un mot", href: "#apropos", image: panelImage(2) },
+          { label: "Projets", href: "#projets", image: "/echantillons/ville.webp" },
+          { label: "Œuvres", href: "#oeuvres", image: "/echantillons/plage.webp" },
+          { label: "Un mot", href: "#apropos", image: "/banniere.webp" },
         ]}
-        miniImage={recent[0] ? `/uploads/${recent[0].artwork.thumbPath}` : "/banniere.webp"}
-        miniCaption="Accueil — les projets les plus récents"
+        miniImage={
+          recent[0] ? `/uploads/${recent[0].artwork.thumbPath}` : "/echantillons/musiciens.webp"
+        }
+        miniCaption="Accueil · les projets les plus récents"
       />
 
       {/* Bande d'œuvres en vedette */}
@@ -100,15 +99,17 @@ export default async function AccueilPage() {
 
       {/* Bannière pleine largeur teintée */}
       <section id="apropos" className="full-bleed pastel-gradient relative overflow-hidden">
-        {recent[1] && (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            src={`/uploads/${recent[1].artwork.imagePath}`}
-            alt=""
-            aria-hidden
-            className="absolute inset-y-0 right-0 hidden w-1/2 object-cover opacity-90 md:block"
-          />
-        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={
+            recent[1]
+              ? `/uploads/${recent[1].artwork.imagePath}`
+              : "/echantillons/musiciens.webp"
+          }
+          alt=""
+          aria-hidden
+          className="absolute inset-y-0 right-0 hidden w-1/2 object-cover opacity-90 md:block"
+        />
         <div
           className="absolute inset-0 hidden bg-gradient-to-r from-mint via-pale/85 to-transparent md:block"
           aria-hidden

@@ -58,7 +58,7 @@ export default async function AdminPage() {
               {rows.map(({ project, artworkCount }) => (
                 <tr key={project.id} className="border-b border-line-soft last:border-0">
                   <td className="px-4 py-3 font-medium">{project.title}</td>
-                  <td className="px-4 py-3">{project.schoolYear ?? "—"}</td>
+                  <td className="px-4 py-3">{project.schoolYear ?? "·"}</td>
                   <td className="px-4 py-3">{artworkCount}</td>
                   <td className="px-4 py-3">
                     {project.published ? (

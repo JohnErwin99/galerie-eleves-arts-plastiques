@@ -13,7 +13,7 @@ const workSans = Work_Sans({ subsets: ["latin"], variable: "--font-work-sans" })
 export const metadata: Metadata = {
   title: {
     default: "Galerie des élèves d'arts plastiques",
-    template: "%s — Galerie des élèves d'arts plastiques",
+    template: "%s · Galerie des élèves d'arts plastiques",
   },
   description:
     "La galerie d'art numérique d'Euchenith Marie-Jean, enseignante en arts visuels : les projets réalisés en classe par ses élèves, exposés pour les parents et les proches.",
@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </p>
           <p className="mt-2 text-sm text-white/60">
             L&apos;art des élèves d&apos;Euchenith Marie-Jean, enseignante en arts
-            visuels — un projet à but non lucratif
+            visuels, un projet à but non lucratif
           </p>
         </footer>
       </body>

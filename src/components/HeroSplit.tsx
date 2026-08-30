@@ -91,7 +91,6 @@ export function HeroSplit({
                 src={p.image}
                 alt=""
                 aria-hidden
-                style={{ objectPosition: `${12 + i * 25}% center` }}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div
