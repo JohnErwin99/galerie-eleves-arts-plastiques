@@ -5,7 +5,9 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ \
   && rm -rf /var/lib/apt/lists/*
 COPY package.json package-lock.json ./
-RUN npm ci
+# Le lockfile a été généré avec npm 11; l'image embarque npm 10, qui le juge
+# désynchronisé (bogue npm inter-versions sur les dépendances optionnelles).
+RUN npm install -g npm@11 && npm ci
 
 FROM node:22-slim AS builder
 WORKDIR /app
