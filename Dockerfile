@@ -1,17 +1,21 @@
-FROM node:22-alpine AS deps
+FROM node:22-slim AS deps
 WORKDIR /app
+# Outils de compilation au cas où un module natif (better-sqlite3, sharp)
+# n'aurait pas de binaire précompilé pour cette version de Node.
+RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ \
+  && rm -rf /var/lib/apt/lists/*
 COPY package.json package-lock.json ./
 RUN npm ci
 
-FROM node:22-alpine AS builder
+FROM node:22-slim AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# Valeurs factices pour le build seulement (les vraies viennent de l'environnement Railway)
+# Valeurs factices pour le build seulement (les vraies viennent de l'environnement Render)
 ENV SESSION_SECRET=build-placeholder-secret-32-characters!!
 RUN npm run build
 
-FROM node:22-alpine AS runner
+FROM node:22-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=builder /app/.next/standalone ./
