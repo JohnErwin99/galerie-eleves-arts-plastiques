@@ -5,16 +5,18 @@ import fs from "node:fs";
 import path from "node:path";
 import * as schema from "./schema";
 
-const dbPath = process.env.DATABASE_PATH ?? "data/app.db";
+type DB = BetterSQLite3Database<typeof schema>;
 
 declare global {
   // eslint-disable-next-line no-var
-  var __db: BetterSQLite3Database<typeof schema> | undefined;
+  var __db: DB | undefined;
 }
 
-function createDb() {
+function createDb(): DB {
+  const dbPath = process.env.DATABASE_PATH ?? "data/app.db";
   fs.mkdirSync(path.dirname(dbPath), { recursive: true });
   const sqlite = new Database(dbPath);
+  sqlite.pragma("busy_timeout = 5000");
   sqlite.pragma("journal_mode = WAL");
   sqlite.pragma("foreign_keys = ON");
   const db = drizzle(sqlite, { schema });
@@ -22,5 +24,16 @@ function createDb() {
   return db;
 }
 
-export const db = globalThis.__db ?? (globalThis.__db = createDb());
+// Connexion paresseuse : le build de Next importe les modules de pages dans
+// plusieurs processus en parallèle; ouvrir (et migrer) la base à l'import
+// provoquait des « database is locked ». La base ne s'ouvre qu'à la première
+// requête, qui n'arrive jamais pendant le build (pages force-dynamic).
+export const db: DB = new Proxy({} as DB, {
+  get(_target, prop) {
+    const real = (globalThis.__db ??= createDb());
+    const value = Reflect.get(real, prop, real);
+    return typeof value === "function" ? value.bind(real) : value;
+  },
+});
+
 export * from "./schema";
