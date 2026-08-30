@@ -21,6 +21,7 @@ npm run dev                 # http://localhost:3000
 | `ADMIN_EMAIL` | Courriel de connexion de l'enseignante |
 | `ADMIN_PASSWORD_HASH` | Hash bcrypt du mot de passe |
 | `SESSION_SECRET` | Secret de session (32+ caractères) : `openssl rand -hex 32` |
+| `RECOVERY_CODE` | Code pour « Mot de passe oublié » : `openssl rand -hex 8` — à conserver par la personne qui gère le site |
 
 Générer le hash du mot de passe :
 
@@ -33,6 +34,15 @@ npm run hash-password -- "votre mot de passe"
 valeur brute sans les `\`.
 
 ## Guide de l'enseignante
+
+Aucun lien vers l'espace d'administration n'apparaît sur le site public :
+taper directement l'adresse `/admin` dans le navigateur (à mettre en favori).
+
+**Mot de passe oublié?** Sur la page de connexion, cliquer « Mot de passe
+oublié? », entrer le code de récupération (`RECOVERY_CODE`, conservé par la
+personne qui gère le site) et choisir un nouveau mot de passe. Le mot de passe
+défini ainsi est stocké dans la base et remplace celui des variables
+d'environnement.
 
 1. Aller sur `/admin` et se connecter.
 2. **Nouveau projet** : titre (ex. « Autoportraits — 10e année »), description,

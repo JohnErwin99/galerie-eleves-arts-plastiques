@@ -41,7 +41,6 @@ export default async function AccueilPage() {
           { label: "Projets", href: "#projets", image: panelImage(0) },
           { label: "Œuvres", href: "#oeuvres", image: panelImage(1) },
           { label: "Un mot", href: "#apropos", image: panelImage(2) },
-          { label: "Enseignante", href: "/admin", image: "/banniere.webp" },
         ]}
         miniImage={recent[0] ? `/uploads/${recent[0].artwork.thumbPath}` : "/banniere.webp"}
         miniCaption="Accueil — les projets les plus récents"
@@ -129,12 +128,6 @@ export default async function AccueilPage() {
               className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-deep"
             >
               Voir les projets
-            </Link>
-            <Link
-              href="/admin"
-              className="rounded-full border border-accent px-5 py-2.5 text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-white"
-            >
-              Espace enseignante
             </Link>
           </div>
         </Reveal>

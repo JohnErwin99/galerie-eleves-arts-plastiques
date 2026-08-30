@@ -32,5 +32,17 @@ export const artworks = sqliteTable("artworks", {
     .$defaultFn(() => new Date()),
 });
 
+// Identifiants de l'admin unique. Une seule ligne (id = 1), initialisée depuis
+// les variables d'environnement au premier accès, puis modifiable via la
+// réinitialisation du mot de passe.
+export const adminCredentials = sqliteTable("admin_credentials", {
+  id: integer("id").primaryKey(),
+  email: text("email").notNull(),
+  passwordHash: text("password_hash").notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+});
+
 export type Project = typeof projects.$inferSelect;
 export type Artwork = typeof artworks.$inferSelect;

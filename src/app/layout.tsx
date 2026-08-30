@@ -35,14 +35,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Galerie des élèves <span className="accent-word">d&apos;arts plastiques</span>
               </span>
             </Link>
-            <nav className="text-sm">
-              <Link
-                href="/admin"
-                className="rounded-full border border-accent px-4 py-2 text-accent transition-colors hover:bg-accent hover:text-white"
-              >
-                Espace enseignante
-              </Link>
-            </nav>
           </div>
         </header>
         <main className="grow">{children}</main>
